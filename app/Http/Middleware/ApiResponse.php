@@ -21,11 +21,12 @@ class ApiResponse
         $response = $next($request);
         $original = $response->getOriginalContent();
         if ($response->getStatusCode() !== Response::HTTP_OK) {
-            $original = JsonFormat::error($response->getStatusCode(), null, $original);
+            return $response;
         } else {
             $original = JsonFormat::success($original);
+            $response->setContent($original->getContent());
+            return $response;
         }
-        $response->setContent($original->getContent());
-        return $response;
+
     }
 }

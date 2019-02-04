@@ -24,9 +24,15 @@ Route::group([
 ], function () {
     Route::group([
         "namespace" => "Auth",
-    
+
     ], function () {
         Route::post("register", "RegisterController@register");
         Route::post("login", "LoginController@login");
+        Route::group([
+            "middleware" => "auth:api",
+            "prefix" => "user"
+        ], function () {
+            Route::get("profile", "UserController@details");
+        });
     });
 });
