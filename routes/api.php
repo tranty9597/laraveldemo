@@ -36,3 +36,21 @@ Route::group([
         });
     });
 });
+
+
+Route::group([
+    "namespace" => "Api",
+    "prefix" => "chat"
+
+], function () {
+    Route::group([
+        "namespace" => "Chat",
+        // "middleware" => "auth:api"
+    ], function () {
+        Route::get('Redis', 'RedisController@index');
+        Route::post('sendmessage', 'RedisController@sendMessage');
+        Route::get('writemessage', 'RedisController@writemessage');
+    });
+});
+
+
